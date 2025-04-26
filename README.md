@@ -34,6 +34,14 @@ TheHive can be deployed either as a single server or as a clustered setup depend
 
 TheHive supports clustered environments with virtual IPs and load balancers to scale horizontally for optimal performance.
 
+## 📋 Prerequisites
+
+Before installing TheHive, ensure the following system dependencies are met:
+
+- Linux server (Debian/Ubuntu/CentOS preferred)
+- Minimum 4 CPU cores, 8 GB RAM, 50 GB disk space (production use)
+- Root or sudo privileges
+
 ## 📦 Installation
 
 
@@ -52,7 +60,41 @@ This document provides step-by-step instructions to install **TheHive**, a compr
 Before installing TheHive, make sure you install the required dependencies for your system.
 
 ### For **DEB-based** Systems (e.g., Ubuntu, Debian)
-Open a terminal window and run the following command to install the necessary dependencies:
- 
+1. Open a terminal window.
+2. Run the following command to install the necessary dependencies:
+
+ ```bash
+apt install wget gnupg apt-transport-https git ca-certificates ca-certificates-java curl software-properties-common python3-pip lsb-release
+```
+
+Ensure that all dependencies are successfully installed before proceeding with the TheHive installation process.
+
+## ☕ Java Installation 
+
+1. Open a terminal window.
+2. Execute the following commands:
+
+```
+wget -qO- https://apt.corretto.aws/corretto.key | sudo gpg --dearmor -o /usr/share/keyrings/corretto.gpg
+echo "deb [signed-by=/usr/share/keyrings/corretto.gpg] https://apt.corretto.aws stable main" | sudo tee -a /etc/apt/sources.list.d/corretto.sources.list
+sudo apt update
+sudo apt install java-common java-11-amazon-corretto-jdk
+echo JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto" | sudo tee -a /etc/environment
+export JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto"
+
+```
+
+##📦 Apache Cassandra Installation
+TheHive uses Apache Cassandra for database storage. Supported version: 4.0.x.
+
+Install Apache Cassandra (example for Debian/Ubuntu):
+Installation#
+
+DEB
+1. Add Apache Cassandra repository references:
+    Download Apache Cassandra repository keys using the following command:
+```
+wget -qO -  https://downloads.apache.org/cassandra/KEYS | sudo gpg --dearmor  -o /usr/share/keyrings/cassandra-archive.gpg
+```
 
 Happy Incident Responding! 🎯
