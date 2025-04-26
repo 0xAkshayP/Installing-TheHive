@@ -97,4 +97,52 @@ DEB
 wget -qO -  https://downloads.apache.org/cassandra/KEYS | sudo gpg --dearmor  -o /usr/share/keyrings/cassandra-archive.gpg
 ```
 
+   Add the repository to your system by appending the following line to the /etc/apt/sources.list.d/cassandra.sources.list file. This file may not exist, and you may need to create it.
+
+   ```
+echo "deb [signed-by=/usr/share/keyrings/cassandra-archive.gpg] https://debian.cassandra.apache.org 40x main" |  sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+```
+2. Once the repository references are added, update your package index and install Cassandra using the following command:
+   ```
+   sudo apt update
+   sudo apt install cassandra
+   ```
+   
+   By default, data is stored in /var/lib/cassandra. Set appropriate permissions for this directory to avoid any issues with data storage and access.
+
+## Configuration
+Configure Cassandra by modifying settings within the /etc/cassandra/cassandra.yaml file.
+
+1.Locate the Cassandra configuration file:
+
+ Navigate to the directory containing the Cassandra configuration file `/etc/cassandra/`.
+
+2.Edit the cassandra.yaml file:
+
+ Open the cassandra.yaml file in a text editor with appropriate permissions.
+
+3.Configure cluster name:
+
+ Set the cluster_name parameter to the desired name. This name helps identify the Cassandra cluster.
+
+4.Configure listen address:
+
+ Set the listen_address parameter to the IP address of the node within the cluster. Other nodes within the cluster use this address to communicate.
+
+5.Configure RPC address:
+
+ Set the rpc_address parameter to the IP address of the node to enable clients to connect to the Cassandra cluster.
+
+6.Configure seed provider:
+
+ Ensure the seed_provider section is properly configured. The seeds parameter should contain the IP addresses of the seed nodes in the cluster.
+
+7.Configure directories:
+
+ Set the directories for data storage, commit logs, saved caches, and hints per your requirements. Ensure that the specified directories exist and have appropriate permissions.
+
+8.Save the changes:
+
+ After making the necessary configurations, save the changes to the cassandra.yaml file.
+
 Happy Incident Responding! 🎯
