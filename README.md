@@ -1,4 +1,4 @@
-# Installing-TheHive
+# Installing-TheHive-On-Debian/Ubuntu
 
 # 🚀 TheHive Installation and Overview
 
@@ -84,7 +84,7 @@ export JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto"
 
 ```
 
-##📦 Apache Cassandra Installation
+## 📦 Apache Cassandra Installation
 TheHive uses Apache Cassandra for database storage. Supported version: 4.0.x.
 
 Install Apache Cassandra (example for Debian/Ubuntu):
@@ -110,7 +110,7 @@ echo "deb [signed-by=/usr/share/keyrings/cassandra-archive.gpg] https://debian.c
    
    By default, data is stored in /var/lib/cassandra. Set appropriate permissions for this directory to avoid any issues with data storage and access.
 
-## Configuration
+## ⚙️Configuration
 Configure Cassandra by modifying settings within the /etc/cassandra/cassandra.yaml file.
 
 1.Locate the Cassandra configuration file:
@@ -144,5 +144,133 @@ Configure Cassandra by modifying settings within the /etc/cassandra/cassandra.ya
 8.Save the changes:
 
  After making the necessary configurations, save the changes to the cassandra.yaml file.
+
+## 🔥Start the service
+
+1. Execute the following command to start the Cassandra service:
+~~~
+sudo systemctl start cassandra
+~~~
+
+2. Enable the Cassandra service to restart automatically after a system reboot:
+~~~
+sudo systemctl enable cassandra
+~~~
+
+3. Optional: If the Cassandra service was started automatically before configuring it, it's recommended to stop it, remove existing data, and restart it once the configuration is updated.
+Execute the following commands:
+~~~
+sudo systemctl stop cassandra
+sudo rm -rf /var/lib/cassandra/*
+ ~~~
+
+ # 📈Elasticsearch#
+ 
+ TheHive uses Elasticsearch as its indexing engine.
+
+Supported versions:
+
+7.x
+
+8.x
+
+Example: Install Elasticsearch 7.x
+```
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt install apt-transport-https
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+sudo apt update
+sudo apt install elasticsearch
+```
+
+Enable and start Elasticsearch:
+```
+sudo systemctl enable elasticsearch
+sudo systemctl start elasticsearch
+```
+
+# Configuration
+You can configure Elasticsearch by modifying settings within the /etc/elasticsearch/elasticsearch.yml file.
+
+1. Locate the Elasticsearch configuration file:
+
+Navigate to the directory containing the Elasticsearch configuration file `/etc/elasticsearch/`.
+
+2. Edit the elasticsearch.yml file:
+
+Open the `elasticsearch.yml` file in a text editor with appropriate permissions.
+
+3. Configure HTTP and transport hosts:
+
+Set the `http.host` and `transport.host` parameters to `127.0.0.1` or the desired IP address.
+
+4. Configure cluster name:
+
+Set the `cluster.name` parameter to the desired name. This name helps identify the Elasticsearch cluster.
+
+5. Configure thread pool search queue size:
+
+Set the `thread_pool.search.queue_size` parameter to the desired value, such as `100000`.
+
+6. Configure paths for logs and data:
+
+Set the `path.logs` and `path.data` parameters to the desired directories, such as `/var/log/elasticsearch` and `/var/lib/elasticsearch`, respectively.
+
+7. Optional: Configure X-Pack security:
+
+If you're not using X-Pack security, ensure that `xpack.security.enabled` is set to `false`.
+
+8. Optional: Configure script allowed types:
+
+If needed, set the `script.allowed_types` parameter to specify allowed script types.
+
+9. Save the changes:
+
+After making the necessary configurations, save the changes to the `elasticsearch.yml` file.
+
+# 🔥Start the service
+
+1. Execute the following command to start the Elasticsearch service:
+```
+sudo systemctl start elasticsearch
+```
+
+2. Enable the Elasticsearch service to restart automatically after a system reboot:
+
+```
+sudo systemctl enable elasticsearch
+```
+
+3. Optional: If the Elasticsearch service was started automatically before configuring it, it's recommended to stop it, remove existing data, and restart it once the configuration is updated.
+Execute the following commands:
+
+```
+sudo systemctl stop elasticsearch
+sudo rm -rf /var/lib/elasticsearch/*
+```
+
+
+# 🐝 TheHive Installation
+
+This section provides detailed instructions for installing and configuring TheHive..
+
+Installation
+
+
+For Debian systems, use the following command:
+```
+wget -O- https://raw.githubusercontent.com/StrangeBeeCorp/Security/main/PGP%20keys/packages.key | sudo gpg --dearmor -o /usr/share/keyrings/strangebee-archive-keyring.gpg
+```
+
+Install TheHive package by using the following commands:
+```
+echo 'deb [arch=all signed-by=/usr/share/keyrings/strangebee-archive-keyring.gpg] https://deb.strangebee.com thehive-5.4 main' |sudo tee -a /etc/apt/sources.list.d/strangebee.list
+sudo apt-get update
+sudo apt-get install -y thehive
+```
+
+Configuration#
+The setup provided with binary packages is tailored for a standalone installation, with all components hosted on the same server. At this point, it's crucial to fine-tune the following parameters as necessary:
+
 
 Happy Incident Responding! 🎯
